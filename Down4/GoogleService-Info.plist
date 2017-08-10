@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AD_UNIT_ID_FOR_BANNER_TEST</key>
+	<string>ca-app-pub-3940256099942544/2934735716</string>
+	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
+	<string>ca-app-pub-3940256099942544/4411468910</string>
+	<key>CLIENT_ID</key>
+	<string>357366230708-h9k6uh7v8n978611l0sj4e063hrsb2id.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.357366230708-h9k6uh7v8n978611l0sj4e063hrsb2id</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDlrUIKUHKVaAI2rdLHbf7QRIz8CbIvcls</string>
+	<key>GCM_SENDER_ID</key>
+	<string>357366230708</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.app.Down4</string>
+	<key>PROJECT_ID</key>
+	<string>down4-8abc4</string>
+	<key>STORAGE_BUCKET</key>
+	<string>down4-8abc4.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<true/>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false/>
+	<key>IS_APPINVITE_ENABLED</key>
+	<false/>
+	<key>IS_GCM_ENABLED</key>
+	<true/>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true/>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:357366230708:ios:c0bda0dbdcef54a7</string>
+	<key>DATABASE_URL</key>
+	<string>https://down4-8abc4.firebaseio.com</string>
+</dict>
+</plist>
