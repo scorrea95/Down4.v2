@@ -31,6 +31,9 @@ class enterDetailsVC: UIViewController, UITextFieldDelegate, UIImagePickerContro
     var pickerView1 = UIPickerView()
     var pickOption1 = ["Other", "Male", "Female"]   //gender picker options
     
+    var collegePicker = UIPickerView()
+    var collegeNames = ["All Colleges", "Columbia University", "Cornell University", "Ithaca College", "Fordham University", "New York University", "Rutgers University", "Seton Hall University", "St. John's University", "Syracuse University"]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -59,6 +62,10 @@ class enterDetailsVC: UIViewController, UITextFieldDelegate, UIImagePickerContro
         gender.delegate = self
         
         gender.inputView = pickerView1
+        
+        collegePicker.delegate = self
+        college.delegate = self
+        college.inputView = collegePicker
         
         createAccount.layer.cornerRadius = 30
         createAccount.layer.masksToBounds = true
@@ -247,7 +254,8 @@ class enterDetailsVC: UIViewController, UITextFieldDelegate, UIImagePickerContro
                                         "longitude": "" as AnyObject,
                                         "State": "" as String,
                                         "City": "" as String,
-                                        "Clout": 0 as Int
+                                        "Clout": 0 as Int,
+                                        "followersCount": 0 as Int
                                     ]
                                     Database.database().reference().child("users").child((user?.uid)!).updateChildValues(newUser) { (error, ref) in
                                         if error == nil{
@@ -427,15 +435,22 @@ class enterDetailsVC: UIViewController, UITextFieldDelegate, UIImagePickerContro
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         if(gender.isEditing){
             return pickOption1.count
-        }else{
+        } else if (college.isEditing) {
+            return collegeNames.count
+        } else {
             return 0
         }
+
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         if(gender.isEditing){
             return pickOption1[row]
-        }else{
+        }
+        
+        else if(college.isEditing){
+            return collegeNames[row]
+        } else{
             return nil
         }
     }
@@ -444,7 +459,11 @@ class enterDetailsVC: UIViewController, UITextFieldDelegate, UIImagePickerContro
         
         if(gender.isEditing){
             gender.text = pickOption1[row]
-        }else{
+        }else if(college.isEditing){
+            college.text = collegeNames[row]
+        }
+        
+        else{
             
         }
         

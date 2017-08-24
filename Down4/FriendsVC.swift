@@ -19,6 +19,7 @@ class FriendsVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
         // SegmentedControl: Created and designed in IB that announces its value on interaction
         segment.titles = ["Friends","Requests"]
         segment.titleFont = UIFont(name: "HelveticaNeue-Medium", size: 13.0)!
@@ -29,9 +30,10 @@ class FriendsVC: UIViewController {
         segment.announcesValueImmediately = false
         segment.addTarget(self, action: #selector(self.SegmentedControlValueChanged(_:)), for: .valueChanged)
         
-        self.friendActivityView.isHidden = false
-        self.friendListView.isHidden = true
+    //    self.friendActivityView.isHidden = false
+        self.friendListView.isHidden = false
         self.newRequestView.isHidden = true
+ 
 
     }
     
@@ -40,15 +42,18 @@ class FriendsVC: UIViewController {
        
         if sender.index == 0 {
             print("Friends")
+            
+       
             UIView.animate(withDuration: 0.5, animations: {
-                self.friendActivityView.isHidden = true
+             //   self.friendActivityView.isHidden = true
                 self.friendListView.isHidden = false
                 self.newRequestView.isHidden = true
             })
         }else if sender.index == 1 {
             print("Requests")
+           
             UIView.animate(withDuration: 0.5, animations: {
-                self.friendActivityView.isHidden = true
+             //   self.friendActivityView.isHidden = true
                 self.friendListView.isHidden = true
                 self.newRequestView.isHidden = false
             })

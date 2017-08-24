@@ -17,6 +17,9 @@ class profileHeaderVC: UIViewController {
     @IBOutlet weak var college: UILabel!
     @IBOutlet weak var clout: UILabel!
     @IBOutlet weak var follow: UIButton!
+    @IBOutlet weak var followerCount: UILabel!
+    @IBOutlet weak var followingCount: UILabel!
+    
 
     var userDetails: userItem?
     
@@ -77,6 +80,8 @@ class profileHeaderVC: UIViewController {
 //        username.text = "@\(userDetails!.username!)"
         college.text = userDetails?.college!
         clout.text = "Clout: \(userDetails!.clout!)"
+        followerCount.text = "\(userDetails!.followerCount!)"
+        
         
         let picture = userDetails?.imageURL!
         let url = URL(string:picture!)

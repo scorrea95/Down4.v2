@@ -28,7 +28,8 @@ class userItem: NSObject {
     var latitude: String?
     var longitude: String?
     var clout: Int?
-    
+    var followerCount: Int?
+    var followingCount: Int?
     
     init(dictionary: [String: AnyObject]) {
         super.init()
@@ -51,5 +52,7 @@ class userItem: NSObject {
         latitude = dictionary["latitude"] as? String
         longitude = dictionary["longitude"] as? String
         clout = dictionary["Clout"] as? Int
+        followerCount = dictionary["followersCount"] as? Int
+        followingCount = dictionary["following"] as? Int
     }
 }

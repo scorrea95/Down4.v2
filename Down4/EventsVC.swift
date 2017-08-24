@@ -13,14 +13,26 @@ import KVNProgress
 import PullToRefreshSwift
 import UserNotifications
 
-class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UISearchBarDelegate, UISearchResultsUpdating {
 
     @IBOutlet weak var collectionView: UICollectionView!
     
     var events = [eventModel]()
+  //  var filteredEvents = [eventModel]()
+    
+    
+    var searchController: UISearchController!
+    var searchText: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
+       
+    //    filteredEvents = events
+  //     searchController.searchResultsUpdater = self
+  //      searchController.dimsBackgroundDuringPresentation = true
+  //      definesPresentationContext = true
+    //       searchController.searchBar.scopeButtonTitles = ["Greek Life", "Campus Events", "Parties", "Sports/Live Events", "Other"]
+    //      searchController.searchBar.delegate = self
 
         var options = PullToRefreshOption()
         options.indicatorColor = UIColor(red:0.56, green:0.07, blue:1.00, alpha:1.0)
@@ -29,6 +41,8 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
             // some code
             
             self?.fetchPosts()
+            self?.events.removeAll()
+            self?.collectionView.reloadData()
         })
         
         self.collectionView.startPullRefresh()
@@ -36,6 +50,13 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         NotificationCenter.default.addObserver(self, selector: #selector(self.fetchPosts), name: NSNotification.Name(rawValue: "fetchpost"), object: nil)
         
         self.notificationPermission()
+        
+        
+        
+        
+        
+        
+        
     }
     
     func fetchPosts() {
@@ -90,10 +111,10 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! EventCollectionCell
         
         cell.EventTitle.text = events[indexPath.row].eventTitle
-
+    
         cell.EventPlace.text = events[indexPath.row].placeName
         
-        cell.guestCount.text = "\(events[indexPath.row].guestsCount!)"
+       cell.guestCount.text = "\(events[indexPath.row].guestsCount!)"
         
         if(events[indexPath.row].eventCost! == "Free"){
             cell.EventCost.text = "Free"
@@ -155,4 +176,153 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
     }
     
     @IBAction func unwindToEvent(segue: UIStoryboardSegue) {}
+
+
+    //if we havnt typed anything to the search bar then do not use the search text to filter the results
+   
+     func applySearch(searchText: String, scope: String = "Greek Life") {
+        if searchController.searchBar.text! == "" {
+            events = events.filter { event in
+                let eventCategory = (scope == "Greek Life") || (event.category == scope)
+            return eventCategory
+        }
+     
+     //if we have typed something into the search bar, then we also filter the results for the search bar
+     
+    } else {
+                events = events.filter { event in
+                let eventCategory = (scope == "Greek Life") || (event.category == scope)
+                return eventCategory && event.eventTitle!.lowercased().contains(searchText.lowercased())
+                
+        }
+    }
+    
+    self.collectionView.reloadData()
+    
+    
 }
+
+    func updateSearchResults(for searchController: UISearchController) {
+        let searchBar = searchController.searchBar
+        let selectedScope = searchBar.scopeButtonTitles![searchBar.selectedScopeButtonIndex]
+        applySearch(searchText: searchController.searchBar.text!, scope: selectedScope)
+        
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
+        
+       applySearch(searchText: searchController.searchBar.text!,scope: searchBar.scopeButtonTitles![selectedScope])
+    }
+    
+    
+
+    
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        
+        searchBar.resignFirstResponder()
+        searchText = searchBar.text!
+        self.navigationItem.title = searchText.uppercased()
+        self.searchEvents(searchText: searchText)
+        self.searchEvents1(searchText: searchText)
+        self.searchEvents2(searchText: searchText)
+        self.searchEvents3(searchText: searchText)
+        self.collectionView!.reloadData()
+        self.dismiss(animated: true, completion: nil)
+}
+
+
+    @IBAction func searchAction(_ sender: Any) {
+        
+        searchController = UISearchController(searchResultsController: nil)
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.searchBar.delegate = self
+        searchController.searchBar.text = searchText
+        searchController.dimsBackgroundDuringPresentation = true
+        searchController.searchBar.barTintColor = UIColor(red:0.56, green:0.07, blue:1.00, alpha:1.0)
+        searchController.searchBar.tintColor = UIColor.white
+        searchController.searchBar.scopeButtonTitles = ["Greek Life", "Campus Events", "Parties", "Sports/Live Events",]
+        searchController.searchResultsUpdater = self
+        self.present(searchController, animated: true, completion: nil)
+        
+        
+        
+        
+    }
+
+
+    func searchEvents(searchText: String){
+        events.removeAll()
+        self.collectionView.reloadData()
+         let ref = Database.database().reference().child("events")
+       let query = ref.queryOrdered(byChild: "category").queryEqual(toValue: "Greek Life")
+        query.observe(.value, with: { (snapshot) in
+            for childSnapshot in snapshot.children {
+                print(childSnapshot)
+            }
+        })
+     
+        
+    }
+    func searchEvents1(searchText: String){
+        events.removeAll()
+        self.collectionView.reloadData()
+        let ref = Database.database().reference().child("events")
+        let query = ref.queryOrdered(byChild: "category").queryEqual(toValue: "Campus Events")
+        query.observe(.value, with: { (snapshot) in
+            for childSnapshot in snapshot.children {
+                print(childSnapshot)
+            }
+        })
+        
+        
+    }
+    func searchEvents2(searchText: String){
+        events.removeAll()
+        self.collectionView.reloadData()
+        let ref = Database.database().reference().child("events")
+        let query = ref.queryOrdered(byChild: "category").queryEqual(toValue: "Parties")
+        query.observe(.value, with: { (snapshot) in
+            for childSnapshot in snapshot.children {
+                print(childSnapshot)
+            }
+        })
+        
+        
+    }
+    func searchEvents3(searchText: String){
+        events.removeAll()
+        self.collectionView.reloadData()
+        let ref = Database.database().reference().child("events")
+        let query = ref.queryOrdered(byChild: "category").queryEqual(toValue: "Sports/Live Events")
+        query.observe(.value, with: { (snapshot) in
+            for childSnapshot in snapshot.children {
+                print(childSnapshot)
+            }
+        })
+        
+        
+    }
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

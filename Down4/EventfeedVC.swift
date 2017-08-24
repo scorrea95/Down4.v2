@@ -20,6 +20,8 @@ class EventfeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
     
     var posts = [Posts]()
     var user = [userItem]()
+    var key: String?
+   
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -186,7 +188,9 @@ class EventfeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+      
     }
+
     
     func didTapMediaInPost(_ sender:UITapGestureRecognizer)
     {
@@ -204,10 +208,10 @@ class EventfeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
             print("row number is \(row)")
             print(self.posts[row].uid!)
              
-//            let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-//            let vc = storyboard.instantiateViewController(withIdentifier: "SProfileVC") as! SProfileVC
-//            vc.uid = self.posts[row].uid!
-//            self.navigationController?.pushViewController(vc, animated: true)
+   //         let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+   //         let vc = storyboard.instantiateViewController(withIdentifier: "SProfileVC") as! SProfileVC
+   //         vc.uid = self.posts[row].users.uid!
+   //         self.navigationController?.pushViewController(vc, animated: true)
         }
         
     }

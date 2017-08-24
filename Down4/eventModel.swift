@@ -47,4 +47,14 @@ class eventModel: NSObject {
         isPublic = dictionary["isPublic"] as? Bool
         guestsCount = dictionary["guestsCount"] as? Int
     }
+    
+   
+    
+    
+    
+    
+    
+    
+    
+    
 }

@@ -179,6 +179,7 @@ class createEventVC: UITableViewController, UITextFieldDelegate, UIImagePickerCo
                             "key": key as String,
                             "isPublic": self.isPublic as AnyObject,
                             "guestsCount": 0
+                            
                         ]
                         Database.database().reference().child("events/\(key)").updateChildValues(newEvent) { (error, ref) in
                             if error == nil{
